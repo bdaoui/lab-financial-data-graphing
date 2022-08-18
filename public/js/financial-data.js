@@ -1,19 +1,24 @@
 
 
-let startDate = document.getElementById("start");
-let endDate = document.getElementById("end");
+document.getElementById("start").addEventListener("change", changeDate());
+document.getElementById("end").addEventListener("change", changeDate());
 
-startDate="2020-01-01";
-endDate="2020-07-01";
+
+function changeDate(){
+ startDate = document.getElementById("start").value;
+ endDate = document.getElementById("end").value;
+console.log("startdat ", startDate, "endate ", endDate)
+}
+
+
 
 
 
 axios.get(`https://api.coindesk.com/v1/bpi/historical/close.json?start=${startDate}&end=${endDate}`)
 .then(responseFromApi => { 
-    console.log("this is the response from api", responseFromApi);
+    // console.log("this is the response from api", responseFromApi);
     printTheChart(responseFromApi); })
 .catch(error => console.log(error) )
-
 
 
 
@@ -23,14 +28,13 @@ function printTheChart(responseFromApi){
     const x = Object.keys(responseFromApi.data.bpi);
     const y = Object.values(responseFromApi.data.bpi);
 
-    console.log("is this working", x);
 
     const myChart = new Chart( ctx, {
         type: 'bar',
         data: {
             labels: x,
             datasets: [{
-                label: '# of Gambling Degenerates',
+                label: '# of Gambling',
                 data: y,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
